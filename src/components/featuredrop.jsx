@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 
 const products = [
-  { id: 1, name: 'RICK OWENS HOODIE', price: 'P 18,000', img: '/prd/rickhoodie.png', badge: 'LIMITED\nDROP' },
-  { id: 2, name: 'TRAVIS SCOTT MOCHA HIGH', price: '$190', img: '/prd/ts.png' },
-  { id: 3, name: 'RICK OWENS BELLA CARGO', price: '$120', img: '/prd/bellacargo.png' },
-  { id: 4, name: 'PEARL JAM GRAPHICS TEE', price: '$210', img: '/prd/pearljam.png' },
+  { id: 1, name: 'RICK OWENS HOODIE', price: 'P 18,000', img: '/prd/rickhoodie.png',badge: 'LIMITED\nDROP',hoverImg:'/prd/hoodiehover.png' },
+  { id: 2, name: 'TRAVIS SCOTT MOCHA HIGH', price: 'P 78000', img: '/prd/ts.png',hoverImg:'/prd/tshover.png' },
+  { id: 3, name: 'RICK OWENS BELLA CARGO', price: 'P 18000', img: '/prd/bellacargo.png',hoverImg: '/prd/bellahover.png' },
+  { id: 4, name: 'LOST AND FOUND JORDAN 1 RETRO', price: 'P24000', img: '/prd/lsf.avif',hoverImg:'/prd/lsfhover.png' },
 ];
 
 const FeatureSection = () => {
@@ -42,55 +42,54 @@ const FeatureSection = () => {
             <h1 className="uppercase text-2xl font-bold font-satoshi text-[#1f1518] mb-6">
                 Featured Drop
             </h1>
-
-            {/* The Scrolling Container 
-                - Added cursor-grab to show a "hand" icon on desktop
-                - Added mouse events for drag-to-scroll 
-            */}
-            <div 
-                ref={scrollRef}
-                onMouseDown={handleMouseDown}
-                onMouseLeave={handleMouseLeave}
-                onMouseUp={handleMouseUp}
-                onMouseMove={handleMouseMove}
-                className={`flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] ${isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab'}`}
-            >
+<div 
+   
+               ref={scrollRef}
+        className="flex overflow-x-auto gap-6 snap-x snap-mandatory scroll-smooth 
+                   sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible 
+                   [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+      >
                 {products.map((item) => (
-                    // Added pointer-events-none to the inner elements during drag so you don't accidentally highlight text or images while dragging
-                    <div key={item.id} className={`w-full flex-shrink-0 snap-center sm:w-auto sm:flex-shrink-1 sm:snap-align-none flex flex-col font-satoshi text-[#1f1518] ${isDragging ? 'pointer-events-none' : ''}`}>
-                        
-                        {/* Image Container */}
-                        <div className="relative border border-[#1f1518] bg-[#d1d1d1] p-4 aspect-[4/5] flex items-center justify-center select-none">
-                            {item.badge && (
-                                <div className="absolute top-4 left-4 bg-[#1a1617] text-[#ebebeb] font-bold text-xl leading-tight px-4 py-3 rounded-xl text-center whitespace-pre-line shadow-sm z-10">
-                                    {item.badge}
-                                </div>
-                            )}
-                            {/* draggable="false" stops the browser's default image drag behavior */}
-                            <img 
-                                src={item.img} 
-                                alt={item.name} 
-                                draggable="false"
-                                className="w-full h-full object-contain drop-shadow-lg"
-                            />
-                        </div>
+          <div key={item.id} className="group w-full flex-shrink-0 snap-center sm:w-auto sm:flex-shrink-1 flex flex-col font-satoshi text-[#1f1518]">
+            
+            {/* Image Container */}
+            <div className="relative border border-[#1f1518] bg-[#d1d1d1] p-4 aspect-[4/5] flex items-center justify-center select-none overflow-hidden">
+              {item.badge && (
+                <div className="absolute top-4 left-4 bg-[#1a1617] text-[#ebebeb] font-bold text-xl leading-tight px-4 py-3 rounded-xl text-center whitespace-pre-line shadow-sm z-20">
+                  {item.badge}
+                </div>
+              )}
 
-                        {/* Text Details */}
-                        <div className="mt-3 flex flex-col space-y-1 select-none">
-                            <h2 className="uppercase text-lg tracking-wide leading-none">{item.name}</h2>
-                            <p className="text-lg leading-none">{item.price}</p>
-                        </div>
+              {/* Hover Image (Shown only on hover) */}
+              <img 
+                src={item.hoverImg || item.img} 
+                alt={`${item.name} alternate`} 
+                className="absolute inset-0 w-full h-full object-contain p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"
+              />
 
-                        {/* Add to Cart */}
-                        <button className="mt-4 border border-[#1f1518] bg-[#d1d1d1] py-3 w-full text-center uppercase tracking-wider hover:bg-[#1f1518] hover:text-white transition-colors duration-300 pointer-events-auto">
-                            Add to Cart
-                        </button>
-
-                    </div>
-                ))}
+              {/* Initial Image (Hides on hover) */}
+              <img 
+                src={item.img} 
+                alt={item.name} 
+                className="w-full h-full object-contain drop-shadow-lg transition-opacity duration-500 group-hover:opacity-0"
+              />
             </div>
-        </div>
-    )
-}
+
+            {/* Text Details */}
+            <div className="mt-3 flex flex-col space-y-1">
+              <h2 className="uppercase text-lg tracking-wide">{item.name}</h2>
+              <p className="text-lg">{item.price}</p>
+            </div>
+
+            {/* Add to Cart */}
+            <button className="mt-4 border border-[#1f1518] bg-[#d1d1d1] py-3 w-full text-center uppercase tracking-wider hover:bg-[#1f1518] hover:text-white transition-colors duration-300">
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default FeatureSection;

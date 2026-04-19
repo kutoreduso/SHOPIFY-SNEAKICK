@@ -2,6 +2,7 @@ import HeaderSection from "./components/header"
 import Navbar from "./components/navbar"
 import SaleSection from "./components/sale"
 import FeatureSection from "./components/featuredrop"
+import Categorysection from "./components/category"
 
 const HomeSection = () => {
     
@@ -12,7 +13,7 @@ const HomeSection = () => {
             <Navbar/>
             <HeaderSection/>
             <FeatureSection />
-
+            <Categorysection />
         </div>
         </>
 
