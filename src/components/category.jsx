@@ -23,7 +23,7 @@ const Categorysection = () => {
                 {wearImg.map((brand) => (
                     <div 
                         key={brand.id} 
-                        className="p-4 md:p-6 lg:pl-8 flex-shrink-0 flex justify-center lg:block"
+                        className="p-4 md:p-6 lg:pl-8 flex-shrink-0 flex justify-center lg:block object-contain"
                     >
                         {/* SIZING LOCK:
                             Fixed dimensions mean these won't change relative to the screen.
